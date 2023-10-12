@@ -7,11 +7,15 @@ public class cellScript : MonoBehaviour
     public bool alive;
     SpriteRenderer spriteRenderer;
     public bool livesToNextGeneration;
-    // List with spriteRenderers so the cell can change over time
+    //public bool livedPreviousGeneration;
+    //public  Sprite dyingCell;
+  //public Sprite livingCell;
 
     public void UpdateStatus()
     {
         spriteRenderer ??= GetComponent<SpriteRenderer>();
         spriteRenderer.enabled = alive;
+
+       //f(livesToNextGeneration == true && 
     }
 }

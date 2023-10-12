@@ -5,6 +5,7 @@ using Unity.VisualScripting;
 using UnityEngine;
 using static UnityEngine.RuleTile.TilingRuleOutput;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class GameOfLife : MonoBehaviour
 {
@@ -19,8 +20,6 @@ public class GameOfLife : MonoBehaviour
     public int maximumGenerations = 100;
     public float generationDelay = 0.2f;
     [SerializeField] public Slider slider; // Slidebar to speed up or slow down change between generations
-    menu crossStart; // In menu choos which start by clicking button
-    
 
 
     void Start()
@@ -33,7 +32,7 @@ public class GameOfLife : MonoBehaviour
         numberOfRows = (int)Mathf.Floor(Camera.main.orthographicSize * 2 / cellSize);
 
         cells = new cellScript[numberOfColums, numberOfRows];
-       
+
 
         for (int y = 0; y < numberOfRows; ++y)
         {
@@ -45,24 +44,35 @@ public class GameOfLife : MonoBehaviour
                 newCell.transform.localScale = Vector2.one * cellSize;
                 cells[x, y] = newCell.GetComponent<cellScript>();
 
-
-                StartAsGP(x, y);
-                //StartAsCross(x, y);
-                //StartAsRandom(x, y);
+                
+                if(menu.startPoint == 0)
+                {
+                    StartAsRandom(x, y);
+                }
+                if (menu.startPoint == 1)
+                {
+                    StartAsGP(x, y);
+                }
+                if (menu.startPoint == 2)
+                {
+                    StartAsCross(x, y);
+                }
 
                 cells[x, y].UpdateStatus();
             }
         }
     }
 
-    public void StartAsRandom(int x, int y)
+
+
+   internal void StartAsRandom(int x, int y)
     {
         if (Random.Range(0, 100) < spawnChancePrecentage)
          {
              cells[x, y].alive = true;
          }
     }
-    public void StartAsCross(int x, int y)
+   internal void StartAsCross(int x, int y)
     {
         if (x == numberOfColums / 2)
         {
@@ -74,7 +84,7 @@ public class GameOfLife : MonoBehaviour
         }
     }
 
-    public void StartAsGP(int x, int y)
+   internal void StartAsGP(int x, int y)
     {
         // Maximum cellsize 0.5f
         if (x == 10 && y == 2 || x == 11 && y == 2 || x == 12 && y == 2 || x == 13 && y == 2  || x == 14 && y == 2 || x == 15 && y == 2 ||
