@@ -79,7 +79,7 @@ SpriteRenderer:
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 1.0714285, y: 1.0714285}
+  m_Size: {x: 1, y: 1}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
@@ -99,5 +99,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   alive: 0
   livesToNextGeneration: 0
-  dyingCell: {fileID: 21300000, guid: e094212d7739fea4f906938a8d62cc54, type: 3}
-  ivingCell: {fileID: 21300000, guid: f5011f0ce12490b4fbbda7a831753588, type: 3}
+  faded: 0
+  fadedCell: {fileID: 21300000, guid: e094212d7739fea4f906938a8d62cc54, type: 3}
+  livelyCell: {fileID: 21300000, guid: f5011f0ce12490b4fbbda7a831753588, type: 3}

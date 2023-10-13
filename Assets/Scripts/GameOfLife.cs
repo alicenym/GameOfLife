@@ -17,16 +17,15 @@ public class GameOfLife : MonoBehaviour
     public bool livesToNextGeneration = false;
     private bool newGeneration = true;
     private int generationCount = 0;
-    public int maximumGenerations = 100;
-    public float generationDelay = 0.2f;
-    [SerializeField] public Slider slider; // Slidebar to speed up or slow down change between generations
+    public int maximumGenerations = 1000;
+    public float generationDelay = 2f;
 
 
     void Start()
     {
 
         QualitySettings.vSyncCount = 0;
-        Application.targetFrameRate = 4;
+        Application.targetFrameRate = 8;
 
         numberOfColums = (int)Mathf.Floor((Camera.main.orthographicSize * Camera.main.aspect * 2) / cellSize);
         numberOfRows = (int)Mathf.Floor(Camera.main.orthographicSize * 2 / cellSize);
@@ -62,8 +61,6 @@ public class GameOfLife : MonoBehaviour
             }
         }
     }
-
-
 
    internal void StartAsRandom(int x, int y)
     {
@@ -158,71 +155,61 @@ public class GameOfLife : MonoBehaviour
     {
         int aliveNeighbors = 0;
 
-        //Top left neighbor
         if (x > 0 && y > 0 && cells[x - 1, y -1].alive)
         { 
             aliveNeighbors++;
         }
-        //Top neighbor
         if ( y > 0 && cells[x, y -1].alive)
         {
             aliveNeighbors++;
         }
-        //Top right neighbor
         if (x < numberOfColums -1 && y > 0 && cells[x +1, y -1].alive)
         {
             aliveNeighbors++;
         }
-        // Left neighbor 
         if (x > 0 && cells[x -1, y].alive)
         {
             aliveNeighbors++;
         }
-        // Right neighbor 
         if (x < numberOfColums -1 && cells[x +1, y].alive)
         {
             aliveNeighbors++;
         }
-        //Bottom left
         if (x > 0 && y < numberOfRows -1 && cells[x -1, y +1].alive)
         {
             aliveNeighbors++;
         }
-        //Bottom right
         if (x < numberOfColums -1 && y < numberOfRows -1 && cells[x +1, y +1].alive)
         {
             aliveNeighbors++;
         }
-        //Bottom 
         if (y < numberOfRows -1 && cells[x, y +1].alive)
         {
             aliveNeighbors++;
         }
 
-        //If the cell is alive
         if (cells[x, y].alive)
         {
-            //If the cell has exactly 2 or 3 neighbors
             if(aliveNeighbors == 2 || aliveNeighbors == 3)
             {
                 cells[x, y].livesToNextGeneration = true;
+                cells[x, y].alive = true;
             }
-            //If the cell has less then 2 neighbors or more then 3 neighbors
+
             if (aliveNeighbors < 2 || aliveNeighbors > 3)
             {
                 cells[x, y].livesToNextGeneration = false;
+                cells[x, y].alive = true;
+                cells[x, y].faded = true;
             }
         }
 
-        //If the cell is dead
         if (!cells[x, y].alive) 
         {
-            //If the cell has exactly 3 neighbors 
             if (aliveNeighbors == 3)
             {
                 cells[x, y].livesToNextGeneration = true;
             }
-            //If the cell has any other number of neighbors
             if(aliveNeighbors < 3 || aliveNeighbors > 3)
             {
                 cells[x, y].livesToNextGeneration = false;
